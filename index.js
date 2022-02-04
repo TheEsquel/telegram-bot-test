@@ -26,7 +26,6 @@ const  start = () => {
     bot.on('message', async msg => {
         const text = msg.text;
         const chatId = msg.chat.id;
-        console.log(msg);
         if (text === '/start') {
             await bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/ccd/a8d/ccda8d5d-d492-4393-8bb7-e33f77c24907/3.webp')
             await bot.sendMessage(chatId, 'Добро пожаловать к мемлорду')
@@ -42,11 +41,6 @@ const  start = () => {
     bot.on('callback_query', async msg => {
         const data = msg.data;
         const chatId = msg.message.chat.id;
-        console.log(data);
-        console.log(typeof data);
-        console.log(chatId);
-        console.log(chats);
-        console.log(chats[chatId]);
         if (data === '/again') {
             return await startGame(chatId)
         }
