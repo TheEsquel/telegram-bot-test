@@ -1,10 +1,11 @@
 const telegramAPI = require('node-telegram-bot-api')
-
 const token = '5074433539:AAGN8MhwZz8bO7lVq8ayRWElqn0DxNTbkN4'
-
 const  bot  = new telegramAPI(token, {polling: true})
-
 const {gameOptions, replayOptions} = require('./options')
+const mongoose = require('mongoose')
+const {mongoURL} = require('./config/default.json')
+const User = require('./models/Users')
+
 
 bot.setMyCommands([
     {command: '/start', description: "Начальное действие"},
@@ -21,7 +22,19 @@ const startGame =  chatId => {
     return bot.sendMessage(chatId, `Я загадал число,  попробуй отгадать`,  gameOptions)
 }
 
-const  start = () => {
+const  start = async () => {
+    try {
+        console.log(mongoURL);
+        await mongoose.connect(mongoURL, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        }, data => {
+            console.log(data);
+        })
+    } catch (e) {
+        console.log(e);
+    }
+
 
     bot.on('message', async msg => {
         const text = msg.text;
