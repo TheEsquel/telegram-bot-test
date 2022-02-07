@@ -1,10 +1,9 @@
 const { Schema, model} = require('mongoose')
 
 const schema = new Schema({
-    id: { type: Number, required: true, unique: true},
     chatId: {type: String, required: true, unique: true},
-    right: {type: Number},
-    wrong: {type: Number}
+    right: {type: Number, default: 0},
+    wrong: {type: Number, default: 0}
 })
 
 module.exports = model('User', schema)
