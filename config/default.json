@@ -1,3 +1,4 @@
 {
-  "mongoURL": "mongodb+srv://mongo-root:Gwsu9emsqkKvNFHb@cluster0.jhhrz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+  "mongoURL": "mongodb+srv://mongo-root:Gwsu9emsqkKvNFHb@cluster0.jhhrz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "channel_id": "-1001434820845"
 }

@@ -36,27 +36,29 @@ const  start = async () => {
         const chatId = msg.chat.id;
         console.log(msg);
         try {
-            if (msg.text){
-                switch (text) {
-                    case '/start':
-                        await bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/ccd/a8d/ccda8d5d-d492-4393-8bb7-e33f77c24907/3.webp')
-                        await bot.sendMessage(chatId, 'Добро пожаловать!')
-                        const ifUserExists = await User.exists({chatId})
-                        if (!ifUserExists) {
-                            const user = await User.findOne({chatId})
-                            await user.save()
-                        }
+            switch (text) {
+                case '/start':
+                    await bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/ccd/a8d/ccda8d5d-d492-4393-8bb7-e33f77c24907/3.webp')
+                    await bot.sendMessage(chatId, 'Добро пожаловать!')
+                    const ifUserExists = await User.exists({chatId})
+                    if (!ifUserExists) {
+                        const user = await User.findOne({chatId})
+                        await user.save()
+                    }
 
-                        break
-                }
+                    break
+                case '/info':
+                    const user = await User.findOne({chatId})
+                    await bot.sendMessage(chatId, 'Информация о пользователе: \n' +
+                        `- правильных ответов:  ${user.right}\n- неправильных ответов:  ${user.wrong}`)
+                    break
+                case '/game':
+                    return  startGame(chatId)
             }
-           if (msg.photo) {
-               await bot.sendPhoto(channel_id, msg.photo[2].file_id)
-
-               bot.on('channel_post', async post => {
-                   console.log(post);
-               })
-           }
+            if (msg.photo) {
+                bot.sendMessage(channel_id, 'test message', )
+                bot.sendPhoto(channel_id, msg.photo[2].file_id)
+            }
         } catch (e) {
             return bot.sendMessage(chatId, e)
         }
