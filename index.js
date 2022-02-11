@@ -5,6 +5,7 @@ const {gameOptions, replayOptions} = require('./options')
 const mongoose = require('mongoose')
 const {mongoURL, channel_id} = require('./config/default.json')
 const User = require('./models/Users')
+const Meme = require('./models/Memes')
 
 
 bot.setMyCommands([
@@ -13,11 +14,8 @@ bot.setMyCommands([
     {command: '/game', description: "Угадай число"}
 ])
 
-const game_numbers = {}
+const saveMemeToDatabase = () => {
 
-const startGame =  chatId => {
-    game_numbers[chatId] = Math.floor(Math.random() * 10)
-    return bot.sendMessage(chatId, `Я загадал число,  попробуй отгадать`,  gameOptions)
 }
 
 const  start = async () => {
@@ -32,8 +30,12 @@ const  start = async () => {
     }
 
     bot.on('message', async msg => {
-        const text = msg.text;
-        const chatId = msg.chat.id;
+        const {
+            text,
+            photo,
+            caption,
+            chat: { id: chatId}
+            } = msg
         console.log(msg);
         try {
             if (msg.text){
@@ -51,9 +53,11 @@ const  start = async () => {
                 }
             }
            if (msg.photo) {
-               await bot.sendPhoto(channel_id, msg.photo[2].file_id)
-
-               bot.on('channel_post', async post => {
+                await bot.sendPhoto(channel_id, msg.photo[2].file_id)
+                if (msg.caption){
+                    const tagsList = getTagsArray(msg.caption)
+                }
+                bot.on('channel_post', async post => {
                    console.log(post);
                })
            }
