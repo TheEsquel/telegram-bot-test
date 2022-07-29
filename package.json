@@ -14,5 +14,8 @@
     "mongoose": "^6.2.0",
     "node-telegram-bot-api": "^0.56.0",
     "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "eslint": "^8.8.0"
   }
 }
